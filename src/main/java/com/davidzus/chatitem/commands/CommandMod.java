@@ -51,11 +51,6 @@ public class CommandMod{
 
         PlayerEntity player = src.getPlayer();
         assert player != null;
-        ItemStack stack = player.getEquippedStack(slot);
-        if (stack.isEmpty()) {
-            player.sendMessage(Text.literal("You must be holding an item in your hand to run this."), false);
-            return 0;
-        }
 
         UUID uuid = player.getUuid();
 
@@ -67,6 +62,12 @@ public class CommandMod{
                     () -> Text.literal("Please wait " + secsLeft + " more second(s) before using §4/chatitem§r again."),
                     false
             );
+            return 0;
+        }
+
+        ItemStack stack = player.getEquippedStack(slot);
+        if (stack.isEmpty()) {
+            player.sendMessage(Text.literal("You must be holding an item in your hand to run this."), false);
             return 0;
         }
 
