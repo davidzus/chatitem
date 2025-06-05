@@ -13,7 +13,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,7 +38,25 @@ public class CommandMod{
     private static int executeWithCooldown(CommandContext<ServerCommandSource> ctx, EquipmentSlot slot)
             throws CommandSyntaxException {
         ServerCommandSource src = ctx.getSource();
+
+        if (src.getEntity() == null) {
+            src.sendError(Text.literal("This command cannot be run from the server/console."));
+            return 0;
+        }
+
+        if (!(src.getEntity() instanceof ServerPlayerEntity)) {
+            src.sendError(Text.literal("You must be a player to run this command."));
+            return 0;
+        }
+
         PlayerEntity player = src.getPlayer();
+        assert player != null;
+        ItemStack stack = player.getEquippedStack(slot);
+        if (stack.isEmpty()) {
+            player.sendMessage(Text.literal("You must be holding an item in your hand to run this."), false);
+            return 0;
+        }
+
         UUID uuid = player.getUuid();
 
         long now = System.currentTimeMillis();
@@ -57,14 +74,10 @@ public class CommandMod{
         return broadcastEquipped(ctx, slot);
     }
 
-    private static int broadcastEquipped(CommandContext<ServerCommandSource> ctx, EquipmentSlot slot)
-            throws CommandSyntaxException {
+    private static int broadcastEquipped(CommandContext<ServerCommandSource> ctx, EquipmentSlot slot) {
         ServerCommandSource src = ctx.getSource();
         PlayerEntity player = src.getPlayer();
         ItemStack stack = player.getEquippedStack(slot);
-        if (stack.isEmpty()) {
-            return 0;
-        }
 
         Text hoverableItem = stack.toHoverableText();
 
