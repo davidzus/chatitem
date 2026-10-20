@@ -3,13 +3,12 @@
 	"id": "chatitem",
 	"version": "${version}",
 	"name": "chatitem",
-	"description": "This is a ChatItem mod.",
+	"description": "Show the item in your hand in chat. /chatitem and /chatitem offhand.",
 	"authors": [
 		"Davidzus"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/davidzus/chatitem"
 	},
 	"license": "MIT",
 	"icon": "assets/chatitem/icon.png",
@@ -17,9 +16,6 @@
 	"entrypoints": {
 		"main": [
 			"com.davidzus.chatitem.Chatitem"
-		],
-		"fabric-datagen": [
-			"com.davidzus.chatitem.ChatitemDataGenerator"
 		]
 	},
 	"depends": {
@@ -27,8 +23,5 @@
 		"minecraft": "~1.21.4",
 		"java": ">=21",
 		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
 	}
 }
