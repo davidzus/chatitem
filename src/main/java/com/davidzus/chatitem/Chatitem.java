@@ -2,7 +2,6 @@ package com.davidzus.chatitem;
 
 import com.davidzus.chatitem.commands.CommandMod;
 import net.fabricmc.api.ModInitializer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,5 +12,6 @@ public class Chatitem implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		CommandMod.registerCommands();
+		LOGGER.info("ChatItem loaded");
 	}
 }
